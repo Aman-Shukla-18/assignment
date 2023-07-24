@@ -1,5 +1,6 @@
 import {
   Image,
+  ImageSourcePropType,
   Pressable,
   StyleSheet,
   Text,
@@ -7,35 +8,36 @@ import {
   TextStyle,
   View,
 } from 'react-native';
-import React, {forwardRef, useImperativeHandle, useState} from 'react';
+import React, {forwardRef, useState} from 'react';
 import {normalize, vh, vw} from '../utils/Dimension';
 import colors from '../utils/colors';
 import {IMAGES} from '../utils/images';
 import {useEffect} from 'react';
 
 interface Props {
-  value: string
-  editable: boolean,
-  forPassword: boolean,
-  multiline: boolean,
-  label: string,
-  labelStyle:TextStyle ,
-  error: string,
-
+  value: string;
+  placeholder?: string
+  editable?: boolean;
+  forPassword?: boolean;
+  multiline?: boolean;
+  label: string;
+  labelStyle?: TextStyle;
+  error?: string;
+  icon? : ImageSourcePropType
+  onChangeText: (val: string) => void
+  regex: RegExp 
 }
 
 const InputWithLable = forwardRef((props: Props, ref) => {
-  const {labelStyle = {}, editable = true} = props;
-  const [value, setValue] = useState(props?.value);
+  const {labelStyle = {}, editable = true, placeholder = ''} = props;
   const [isPassVisible, setIsPassVisible] = useState(false);
   const [error, setError] = useState(props.error || '');
   useEffect(() => {
-    setError(props?.error);
+    if (props?.error) {
+      setError(props?.error);
+    }
   }, [props?.error]);
 
-  useImperativeHandle(ref, () => ({
-    getValue: () => value,
-  }));
   const onTogglePrivacy = () => {
     setIsPassVisible(p => !p);
   };
@@ -44,21 +46,35 @@ const InputWithLable = forwardRef((props: Props, ref) => {
     <View style={styles.mainContainer}>
       <Text style={[styles.InputBoxHeadings, labelStyle]}>{props?.label}</Text>
       <View style={styles.textInputContainer}>
+        {props?.icon && <Image source={props.icon} style = {styles.passShowHideBtn}  />}
         <TextInput
           style={styles.textInput}
-          value={value}
+          value={props?.value}
           editable={editable}
           secureTextEntry={props?.forPassword && !isPassVisible}
-          onChangeText={setValue}
+          onChangeText={(t) => {
+            if(props?.regex){
+              if(t == ''){
+                props?.onChangeText(t) 
+              }
+              else {
+                props.regex.test(t) && props?.onChangeText(t) 
+              }
+            }
+            else {
+              props?.onChangeText(t)}}
+            }
           multiline={props?.multiline}
+          placeholder={placeholder}
+          placeholderTextColor={colors.GREY}
         />
         {props?.forPassword && (
           <Pressable onPress={onTogglePrivacy}>
             <Image
               source={
                 isPassVisible
-                  ? IMAGES?.VISIBLE_PASS_IMG
-                  : IMAGES?.HIDDEN_PASS_IMG
+                  ? IMAGES?.SHOW
+                  : IMAGES?.HIDDEN
               }
               style={styles.passShowHideBtn}
             />
@@ -75,35 +91,38 @@ export default InputWithLable;
 const styles = StyleSheet.create({
   mainContainer: {
     minHeight: vh(80),
+    marginBottom: vh(20)
   },
   textInput: {
     flex: 1,
     paddingHorizontal: vw(0),
     paddingVertical: vh(5),
     fontSize: normalize(16),
-    color: colors?.MIRAGE,
+    color: colors.BLACK,
+    marginLeft: vw(16),
   },
   InputBoxHeadings: {
-    fontSize: normalize(12),
-    color: colors.MANATE,
+    fontSize: normalize(14),
+    color: colors.BLACK,
     marginBottom: vh(5),
-    marginLeft: vw(10),
+    fontWeight: 'bold'
   },
   textInputContainer: {
     flexDirection: 'row',
     backgroundColor: colors.WHITE,
-    borderRadius: vh(20),
-    paddingHorizontal: vh(10),
+    borderWidth: vw(1),
+    padding: vh(10),
     alignItems: 'center',
   },
   passShowHideBtn: {
     height: vh(20),
-    width: vw(20),
-    tintColor: colors?.MIRAGE,
+    width: vh(20),
+    tintColor: colors.BLUE,
+    resizeMode: 'contain'
   },
   errorMsgTxt: {
     fontSize: normalize(10),
-    color: colors.THUNDERBIRD,
+    color: colors.BLACK,
     marginLeft: vw(10),
     marginTop: vh(5),
   },
