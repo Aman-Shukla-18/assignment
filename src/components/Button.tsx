@@ -13,10 +13,10 @@ import {normalize, vh, vw} from '../utils/Dimension';
 interface Props {
   title: string
   onPress: () => void
-  disabled: boolean,
-  loading: boolean,
-  titleStyle:TextStyle ,
-  btnStyle: ViewStyle,
+  disabled?: boolean,
+  loading?: boolean,
+  titleStyle?:TextStyle ,
+  btnStyle?: ViewStyle,
 }
 
 const Button = (props: Props) => {
@@ -41,13 +41,13 @@ const Button = (props: Props) => {
       style={[
         styles.btn,
         {
-          backgroundColor: isDisabled ? colors?.MANATE : colors?.EBONY_CLAY,
+          backgroundColor: isDisabled ? `${colors?.BLUE}` : colors?.BLUE,
         },
         btnStyle,
       ]}
       onPress={isLoading ? null : onPress}>
       {isLoading ? (
-        <ActivityIndicator color={colors?.MANATE} size={'small'} />
+        <ActivityIndicator color={colors?.WHITE} size={'small'} />
       ) : (
         <Text style={[styles.btnText, titleStyle]}>{title}</Text>
       )}
@@ -63,8 +63,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: vh(10),
     paddingHorizontal: vw(40),
-    borderRadius: vh(8),
-    margin: vh(5),
+    marginHorizontal: vh(5),
+    borderRadius: vw(2),
+    height: vh(50)
   },
   btnText: {
     fontWeight: 'bold',

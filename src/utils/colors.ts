@@ -1,10 +1,6 @@
 export default {
-  TRANSPARENT_BLACK: '#00000080',
-  INACTIVE: '#FFBA01',
-  ACTIVE: '#00CF62',
-  MIRAGE: '#1B202D',
-  EBONY_CLAY: '#292F3F',
-  WHITE: '#FFFFFF',
-  MANATE: '#97999F',
-  THUNDERBIRD: '#BD161C',
+  BLACK: '#000000',
+  WHITE: '#ffffff',
+  BLUE: '#293364',
+  GREY: '#D7D7D7'
 };
