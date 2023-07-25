@@ -7,6 +7,7 @@ import {
   TextInput,
   TextStyle,
   View,
+  ViewStyle,
 } from 'react-native';
 import React, {forwardRef, useState} from 'react';
 import {normalize, vh, vw} from '../utils/Dimension';
@@ -20,16 +21,17 @@ interface Props {
   editable?: boolean;
   forPassword?: boolean;
   multiline?: boolean;
-  label: string;
+  label?: string;
   labelStyle?: TextStyle;
   error?: string;
   icon? : ImageSourcePropType
   onChangeText: (val: string) => void
-  regex: RegExp 
+  regex: RegExp ,
+  mainContainerStyle?: ViewStyle
 }
 
 const InputWithLable = forwardRef((props: Props, ref) => {
-  const {labelStyle = {}, editable = true, placeholder = ''} = props;
+  const {labelStyle = {}, editable = true, placeholder = '',mainContainerStyle = {}} = props;
   const [isPassVisible, setIsPassVisible] = useState(false);
   const [error, setError] = useState(props.error || '');
   useEffect(() => {
@@ -43,8 +45,8 @@ const InputWithLable = forwardRef((props: Props, ref) => {
   };
 
   return (
-    <View style={styles.mainContainer}>
-      <Text style={[styles.InputBoxHeadings, labelStyle]}>{props?.label}</Text>
+    <View style={[styles.mainContainer, mainContainerStyle]}>
+      {props?.label && <Text style={[styles.InputBoxHeadings, labelStyle]}>{props?.label}</Text>}
       <View style={styles.textInputContainer}>
         {props?.icon && <Image source={props.icon} style = {styles.passShowHideBtn}  />}
         <TextInput
@@ -90,8 +92,7 @@ export default InputWithLable;
 
 const styles = StyleSheet.create({
   mainContainer: {
-    minHeight: vh(80),
-    marginBottom: vh(20)
+    marginBottom: vh(20),
   },
   textInput: {
     flex: 1,

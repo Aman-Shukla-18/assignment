@@ -6,6 +6,8 @@ export const IMAGES = {
   LOCK:require('../assets/images/lock.png'),
   CALL:require('../assets/images/phone-call.png'),
   EMAIL:require('../assets/images/email.png'),
-
+  BUILDING:require('../assets/images/building.png'),
+  PEN:require('../assets/images/pen.png'),
+  PROFILE:require('../assets/images/profile.png'),
 
 };

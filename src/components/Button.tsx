@@ -17,6 +17,7 @@ interface Props {
   loading?: boolean,
   titleStyle?:TextStyle ,
   btnStyle?: ViewStyle,
+  outlined?: boolean
 }
 
 const Button = (props: Props) => {
@@ -25,6 +26,7 @@ const Button = (props: Props) => {
     onPress,
     disabled = false,
     loading = false,
+    outlined = false,
     titleStyle,
     btnStyle,
   } = props;
@@ -41,11 +43,11 @@ const Button = (props: Props) => {
       style={[
         styles.btn,
         {
-          backgroundColor: isDisabled ? `${colors?.BLUE}` : colors?.BLUE,
+          backgroundColor: isDisabled ? `${colors?.BLUE}40` : colors?.BLUE,
         },
         btnStyle,
       ]}
-      onPress={isLoading ? null : onPress}>
+      onPress={isLoading || isDisabled ? null : onPress}>
       {isLoading ? (
         <ActivityIndicator color={colors?.WHITE} size={'small'} />
       ) : (

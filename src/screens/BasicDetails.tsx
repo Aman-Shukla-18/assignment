@@ -1,14 +1,31 @@
-import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
+//Library imports
+import {
+  Text,
+  View,
+  Alert,
+  Image,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  SafeAreaView,
+  ImageSourcePropType,
+} from 'react-native';
 import React, {useState} from 'react';
-import colors from '../utils/colors';
-import {normalize, vh, vw} from '../utils/Dimension';
-import Button from '../components/Button';
-import screenNames from '../utils/screenNames';
+import ImagePicker from 'react-native-image-crop-picker';
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {MainStackParams} from '../utils/types';
-import InputWithLable from '../components/InputWithLable';
-import {IMAGES} from '../utils/images';
+//Component imports
+import Button from '../components/Button';
 import RadioButton from '../components/RadioButton';
+import {LoadingImage} from '../components/LoadingImage';
+import InputWithLable from '../components/InputWithLable';
+
+//Util imports
+import colors from '../utils/colors';
+import {IMAGES} from '../utils/images';
+import screenNames from '../utils/screenNames';
+import {MainStackParams} from '../utils/types';
+import {normalize, vh, vw} from '../utils/Dimension';
 
 type Props = {
   navigation: NativeStackNavigationProp<MainStackParams>;
@@ -23,6 +40,9 @@ const BasicDetails = (props: Props) => {
   const [gender, setGender] = useState<'M' | 'F'>('M');
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const [profilePhoto, setProfilePhoto] = useState<ImageSourcePropType>(
+    IMAGES.PROFILE,
+  );
   const onPressNext = () => {
     setLoadingData(true);
     setTimeout(() => {
@@ -30,9 +50,56 @@ const BasicDetails = (props: Props) => {
       setLoadingData(false);
     }, 500);
   };
+  const onEditProfilePicPress = () => {
+    const config = {
+      width: 400,
+      height: 400,
+      cropping: true,
+      compressImageQuality: 0.4,
+    };
+    const cb = image => {
+      const url =
+        Platform.OS === 'android'
+          ? image?.path?.replace('file://', '')
+          : `${image?.path}`;
+      console.log(image, url)
+      setProfilePhoto({uri: url});
+    };
+    Alert.alert('Upload your profile picture from?', '', [
+      {
+        text: 'Cancel',
+        onPress: () => {},
+        style: 'cancel',
+      },
+      {
+        text: 'Camera',
+        onPress: () => {
+          ImagePicker.openCamera(config).then(cb);
+        },
+      },
+      {
+        text: 'Library',
+        onPress: () => {
+          ImagePicker.openPicker(config).then(cb);
+        },
+      },
+    ]);
+  };
   return (
     <SafeAreaView style={styles.mainContainer}>
-      <ScrollView bounces = {false}>
+      <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
+        <Pressable
+          style={styles.profileContainer}
+          onPress={onEditProfilePicPress}>
+          <LoadingImage
+            source={profilePhoto}
+            imageStyle={styles.profileImage}
+            containerStyle={styles.profileImageInnerContainer}
+          />
+          <View style={styles.editContainer}>
+            <Image source={IMAGES.PEN} style={styles.editIcon} />
+          </View>
+        </Pressable>
         <InputWithLable
           label="First Name*"
           value={fName}
@@ -64,7 +131,9 @@ const BasicDetails = (props: Props) => {
           placeholder="Your email goes here"
           icon={IMAGES.EMAIL}
           onChangeText={setEmail}
-          regex={ /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/}
+          regex={
+            /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+          }
         />
         <View style={styles.genderRow}>
           <View style={styles.radioRow}>
@@ -133,6 +202,7 @@ const styles = StyleSheet.create({
   },
   btnContainer: {
     width: '100%',
+    marginBottom: vh(20),
   },
   radioRow: {
     flexDirection: 'row',
@@ -146,5 +216,39 @@ const styles = StyleSheet.create({
   radioLabel: {
     marginLeft: vw(10),
     fontSize: normalize(16),
+  },
+  profileContainer: {
+    height: vh(100),
+    width: vh(100),
+    borderWidth: vw(1),
+    borderRadius: vh(50),
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+  },
+  profileImage: {
+    height: vh(100),
+    width: vh(100),
+  },
+  editContainer: {
+    height: vh(30),
+    width: vh(30),
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: vw(1),
+    borderRadius: vh(30),
+    position: 'absolute',
+    right: -vh(12),
+    backgroundColor: colors.WHITE,
+  },
+  editIcon: {
+    height: vh(16),
+    width: vh(16),
+  },
+  profileImageInnerContainer: {
+    overflow: 'hidden',
+    height: vh(100),
+    width: vh(100),
+    borderRadius: vh(50),
   },
 });

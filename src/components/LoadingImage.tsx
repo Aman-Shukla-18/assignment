@@ -5,19 +5,20 @@ import colors from '../utils/colors';
 
 interface Props {
   source: ImageSourcePropType
-  imageStyle:ImageStyle ,
-  containerStyle: ViewStyle
+  imageStyle?:ImageStyle ,
+  containerStyle?: ViewStyle
 }
 
 export const LoadingImage = (props: Props) => {
   const [isLoading, setIsLoading] = useState(true);
+  const {imageStyle = {}, containerStyle = {}} = props
   return (
-    <View style={props?.containerStyle}>
+    <View style={containerStyle}>
       <Image
         onLoadStart={() => setIsLoading(true)}
         onLoadEnd={() => setIsLoading(false)}
         source={props?.source}
-        style={props?.imageStyle}
+        style={imageStyle}
       />
       {isLoading && (
         <ActivityIndicator
