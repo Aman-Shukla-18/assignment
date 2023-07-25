@@ -1,23 +1,26 @@
+//Library imports
 import {
-  ActivityIndicator,
-  Pressable,
-  StyleSheet,
   Text,
   TextStyle,
   ViewStyle,
+  Pressable,
+  StyleSheet,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
+
+//Util imports
 import colors from '../utils/colors';
 import {normalize, vh, vw} from '../utils/Dimension';
 
 interface Props {
-  title: string
-  onPress: () => void
-  disabled?: boolean,
-  loading?: boolean,
-  titleStyle?:TextStyle ,
-  btnStyle?: ViewStyle,
-  outlined?: boolean
+  title: string;
+  onPress: () => void;
+  disabled?: boolean;
+  loading?: boolean;
+  titleStyle?: TextStyle;
+  btnStyle?: ViewStyle;
+  outlined?: boolean;
 }
 
 const Button = (props: Props) => {
@@ -30,14 +33,16 @@ const Button = (props: Props) => {
     titleStyle,
     btnStyle,
   } = props;
+  const [isDisabled, setIsDisabled] = useState(disabled);
+  const [isLoading, setIsLoading] = useState(loading);
+
   useEffect(() => {
     setIsDisabled(disabled);
   }, [disabled]);
+  
   useEffect(() => {
     setIsLoading(loading);
   }, [loading]);
-  const [isDisabled, setIsDisabled] = useState(disabled);
-  const [isLoading, setIsLoading] = useState(loading);
   return (
     <Pressable
       style={[
@@ -67,7 +72,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: vw(40),
     marginHorizontal: vh(5),
     borderRadius: vw(2),
-    height: vh(50)
+    height: vh(50),
   },
   btnText: {
     fontWeight: 'bold',

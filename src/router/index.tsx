@@ -1,14 +1,21 @@
+//Library imports
 import React from 'react';
+import { StyleSheet, Text } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import screenNames from '../utils/screenNames';
+
+//Screen imports
 import BasicDetails from '../screens/BasicDetails';
 import ProfessionalInfo from '../screens/ProfessionalInfo';
 import AddressInfo from '../screens/AddressInfo';
-import { StyleSheet, Text } from 'react-native';
-import colors from '../utils/colors';
-import { normalize, vw } from '../utils/Dimension';
+
+//Component imports
 import BackButton from '../components/BackButton';
+
+//Util imports
+import colors from '../utils/colors';
+import screenNames from '../utils/screenNames';
+import { normalize, vw } from '../utils/Dimension';
 
 const Stack = createStackNavigator();
 const Router = () => {

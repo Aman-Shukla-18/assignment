@@ -1,38 +1,45 @@
+//Library imports
 import {
+  View,
+  Text,
   Image,
-  ImageSourcePropType,
   Pressable,
   StyleSheet,
-  Text,
   TextInput,
   TextStyle,
-  View,
   ViewStyle,
+  ImageSourcePropType,
 } from 'react-native';
 import React, {forwardRef, useState} from 'react';
-import {normalize, vh, vw} from '../utils/Dimension';
+//Util imports
 import colors from '../utils/colors';
 import {IMAGES} from '../utils/images';
-import {useEffect} from 'react';
+import {normalize, vh, vw} from '../utils/Dimension';
 
 interface Props {
   value: string;
-  placeholder?: string
+  placeholder?: string;
   editable?: boolean;
   forPassword?: boolean;
   multiline?: boolean;
   label?: string;
   labelStyle?: TextStyle;
   error?: string;
-  icon? : ImageSourcePropType
-  onChangeText: (val: string) => void
-  regex: RegExp ,
-  mainContainerStyle?: ViewStyle,
-  hasError?: (val: object) => void
+  icon?: ImageSourcePropType;
+  onChangeText: (val: string) => void;
+  regex: RegExp;
+  mainContainerStyle?: ViewStyle;
+  hasError?: (val: object) => void;
 }
 
 const InputWithLable = forwardRef((props: Props, ref) => {
-  const {labelStyle = {}, editable = true, placeholder = '',mainContainerStyle = {},hasError = () => {}} = props;
+  const {
+    labelStyle = {},
+    editable = true,
+    placeholder = '',
+    mainContainerStyle = {},
+    hasError = () => {},
+  } = props;
   const [isPassVisible, setIsPassVisible] = useState(false);
   const [error, setError] = useState('');
 
@@ -42,32 +49,38 @@ const InputWithLable = forwardRef((props: Props, ref) => {
 
   return (
     <View style={[styles.mainContainer, mainContainerStyle]}>
-      {props?.label && <Text style={[styles.InputBoxHeadings, labelStyle]}>{props?.label}</Text>}
+      {props?.label && (
+        <Text style={[styles.InputBoxHeadings, labelStyle]}>
+          {props?.label}
+        </Text>
+      )}
       <View style={styles.textInputContainer}>
-        {props?.icon && <Image source={props.icon} style = {styles.passShowHideBtn}  />}
+        {props?.icon && (
+          <Image source={props.icon} style={styles.passShowHideBtn} />
+        )}
         <TextInput
           style={styles.textInput}
           value={props?.value}
           editable={editable}
           secureTextEntry={props?.forPassword && !isPassVisible}
-          onChangeText={(t) => {
-            if(props?.regex){
-              props?.onChangeText(t) 
-              if(props.regex.test(t)){
-                let tempObj = {}
-                tempObj[props?.label] = false
-                setError('')
-                hasError(tempObj)
+          onChangeText={t => {
+            if (props?.regex) {
+              props?.onChangeText(t);
+              if (props.regex.test(t)) {
+                let tempObj = {};
+                tempObj[props?.label] = false;
+                setError('');
+                hasError(tempObj);
               } else {
-                let tempObj = {}
-                tempObj[props?.label] = true
-                setError(props.error)
-                hasError(tempObj)
+                let tempObj = {};
+                tempObj[props?.label] = true;
+                setError(props.error);
+                hasError(tempObj);
               }
+            } else {
+              props?.onChangeText(t);
             }
-            else {
-              props?.onChangeText(t)}}
-            }
+          }}
           multiline={props?.multiline}
           placeholder={placeholder}
           placeholderTextColor={colors.GREY}
@@ -75,11 +88,7 @@ const InputWithLable = forwardRef((props: Props, ref) => {
         {props?.forPassword && (
           <Pressable onPress={onTogglePrivacy}>
             <Image
-              source={
-                isPassVisible
-                  ? IMAGES?.SHOW
-                  : IMAGES?.HIDDEN
-              }
+              source={isPassVisible ? IMAGES?.SHOW : IMAGES?.HIDDEN}
               style={styles.passShowHideBtn}
             />
           </Pressable>
@@ -108,7 +117,7 @@ const styles = StyleSheet.create({
     fontSize: normalize(14),
     color: colors.BLACK,
     marginBottom: vh(5),
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   textInputContainer: {
     flexDirection: 'row',
@@ -121,7 +130,7 @@ const styles = StyleSheet.create({
     height: vh(20),
     width: vh(20),
     tintColor: colors.BLUE,
-    resizeMode: 'contain'
+    resizeMode: 'contain',
   },
   errorMsgTxt: {
     fontSize: normalize(10),

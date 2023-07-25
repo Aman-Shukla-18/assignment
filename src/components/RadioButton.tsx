@@ -1,21 +1,24 @@
-import {Pressable, StyleSheet, Text, View} from 'react-native';
-import React, {useState} from 'react';
-import { vw } from '../utils/Dimension';
+//Library imports
+import React from 'react';
+import {Pressable, StyleSheet, View} from 'react-native';
+//Util imports
+import {vw} from '../utils/Dimension';
 import colors from '../utils/colors';
 
 type Props = {
-    initialValue: boolean
+  initialValue: boolean;
   size: number;
-  id: 'M' | 'F'
-  getIsSelected: (val: 'M' | 'F') => 'Dispatch<SetStateAction<"M" | "F">>'
+  id: 'M' | 'F';
+  getIsSelected: (val: 'M' | 'F') => 'Dispatch<SetStateAction<"M" | "F">>';
 };
 
 const RadioButton = (props: Props) => {
-    const {initialValue = false} = props
-  const {size} = props;
+  const {initialValue = false, size} = props;
+
   const onPressRadio = () => {
-    props.getIsSelected(props?.id)
+    props.getIsSelected(props?.id);
   };
+  
   return (
     <Pressable
       onPress={onPressRadio}
@@ -31,8 +34,8 @@ const RadioButton = (props: Props) => {
         <View
           style={[
             {
-              height: size/1.5,
-              width: size/1.5,
+              height: size / 1.5,
+              width: size / 1.5,
               borderRadius: size / 3,
             },
             styles.innerDot,
@@ -50,9 +53,9 @@ const styles = StyleSheet.create({
     borderWidth: vw(1),
     justifyContent: 'center',
     alignItems: 'center',
-    borderColor: colors.BLUE
+    borderColor: colors.BLUE,
   },
   innerDot: {
-    backgroundColor: colors.BLUE
+    backgroundColor: colors.BLUE,
   },
 });

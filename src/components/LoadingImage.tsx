@@ -1,17 +1,27 @@
+//Library imports
 import React, {useState} from 'react';
-import {View, Image, StyleSheet, ActivityIndicator, ViewStyle, ImageStyle, ImageSourcePropType} from 'react-native';
+import {
+  View,
+  Image,
+  ViewStyle,
+  ImageStyle,
+  StyleSheet,
+  ActivityIndicator,
+  ImageSourcePropType,
+} from 'react-native';
+//Util imports
 import colors from '../utils/colors';
 
-
 interface Props {
-  source: ImageSourcePropType
-  imageStyle?:ImageStyle ,
-  containerStyle?: ViewStyle
+  source: ImageSourcePropType;
+  imageStyle?: ImageStyle;
+  containerStyle?: ViewStyle;
 }
 
 export const LoadingImage = (props: Props) => {
+  const {imageStyle = {}, containerStyle = {}} = props;
   const [isLoading, setIsLoading] = useState(true);
-  const {imageStyle = {}, containerStyle = {}} = props
+
   return (
     <View style={containerStyle}>
       <Image
