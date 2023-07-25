@@ -140,25 +140,23 @@ const BasicDetails = (props: Props) => {
           hasError={handleHasError}
         />
         <InputWithLable
-          label="Phone Number*"
+          label="Phone Number"
           value={phoneNumber}
           placeholder="Enter your 10 digit phone number"
           icon={IMAGES.CALL}
           onChangeText={setPhoneNumber}
           regex={REGEX.TenDigitNumber}
           error={STRINGS.phoneNoErrorMsg}
-          hasError={handleHasError}
         />
 
         <InputWithLable
-          label="Email*"
+          label="Email"
           value={email}
           placeholder="Your email goes here"
           icon={IMAGES.EMAIL}
           onChangeText={setEmail}
           regex={REGEX.email}
           error={STRINGS.emailErrorMsg}
-          hasError={handleHasError}
         />
         <View style={styles.genderRow}>
           <View style={styles.radioRow}>
