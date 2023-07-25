@@ -1,5 +1,6 @@
 # Getting Started
-This project is a assignment from neoSoft, In this app we have created all the custom generic components for text input and button. and we have also implemented image picker for android and iOS.
+This project is a assignment from neoSoft, I have used the react navigation header for the header on every screen, for making app responsive i have used a dimensions files that exports vh (to be used for responsive height) vw (to be used for responsive width) normalize (to be used for responsive font size).
+ In this app we have created all the custom generic components for text input and button. and we have also implemented image picker for android and iOS.
 
 For the form validation we could have used formic and yup but I have implemented the validation with regex in a optimized way.
 
