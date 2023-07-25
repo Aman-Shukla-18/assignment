@@ -14,6 +14,7 @@ import {
 import React, {useState} from 'react';
 import ImagePicker from 'react-native-image-crop-picker';
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
+
 //Component imports
 import Button from '../components/Button';
 import RadioButton from '../components/RadioButton';
@@ -25,6 +26,7 @@ import colors from '../utils/colors';
 import {IMAGES} from '../utils/images';
 import screenNames from '../utils/screenNames';
 import {MainStackParams} from '../utils/types';
+import {REGEX, STRINGS} from '../utils/constants';
 import {normalize, vh, vw} from '../utils/Dimension';
 
 type Props = {
@@ -32,24 +34,38 @@ type Props = {
 };
 
 const BasicDetails = (props: Props) => {
-  const [loadingData, setLoadingData] = useState<boolean>(false);
+  const [errors, setErrors] = useState({});
   const [fName, setFName] = useState<string>('');
   const [lName, setLName] = useState<string>('');
-  const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [gender, setGender] = useState<'M' | 'F'>('M');
   const [password, setPassword] = useState<string>('');
+  const [phoneNumber, setPhoneNumber] = useState<string>('');
+  const [loadingData, setLoadingData] = useState<boolean>(false);
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [profilePhoto, setProfilePhoto] = useState<ImageSourcePropType>(
     IMAGES.PROFILE,
   );
-  const onPressNext = () => {
-    setLoadingData(true);
-    setTimeout(() => {
-      props.navigation.navigate(screenNames.PROFESSIONAL_INFO);
-      setLoadingData(false);
-    }, 500);
+
+
+  const hasError = () => Object.values(errors).includes(true);
+
+  const handleHasError = (val: object) => {
+    setErrors({...errors, ...val});
   };
+
+  const onPressNext = () => {
+    if (password === confirmPassword) {
+      setLoadingData(true);
+      setTimeout(() => {
+        props.navigation.navigate(screenNames.PROFESSIONAL_INFO);
+        setLoadingData(false);
+      }, 500);
+    } else {
+      Alert.alert(STRINGS.confirmPasswordErrorMsg);
+    }
+  };
+
   const onEditProfilePicPress = () => {
     const config = {
       width: 400,
@@ -62,7 +78,7 @@ const BasicDetails = (props: Props) => {
         Platform.OS === 'android'
           ? image?.path?.replace('file://', '')
           : `${image?.path}`;
-      console.log(image, url)
+      console.log(image, url);
       setProfilePhoto({uri: url});
     };
     Alert.alert('Upload your profile picture from?', '', [
@@ -106,7 +122,9 @@ const BasicDetails = (props: Props) => {
           placeholder="Enter your first name here"
           icon={IMAGES.USER}
           onChangeText={setFName}
-          regex={/^[A-Za-z]+$/}
+          regex={REGEX.name}
+          error={STRINGS.firstNameErrorMsg}
+          hasError={handleHasError}
         />
         <InputWithLable
           label="Last Name*"
@@ -114,7 +132,9 @@ const BasicDetails = (props: Props) => {
           placeholder="Enter your last name here"
           icon={IMAGES.USER}
           onChangeText={setLName}
-          regex={/^[A-Za-z]+$/}
+          regex={REGEX.name}
+          error={STRINGS.lastNameErrorMsg}
+          hasError={handleHasError}
         />
         <InputWithLable
           label="Phone Number*"
@@ -122,7 +142,9 @@ const BasicDetails = (props: Props) => {
           placeholder="Enter your 10 digit phone number"
           icon={IMAGES.CALL}
           onChangeText={setPhoneNumber}
-          regex={/^[0-9]+$/}
+          regex={REGEX.TenDigitNumber}
+          error={STRINGS.phoneNoErrorMsg}
+          hasError={handleHasError}
         />
 
         <InputWithLable
@@ -131,9 +153,9 @@ const BasicDetails = (props: Props) => {
           placeholder="Your email goes here"
           icon={IMAGES.EMAIL}
           onChangeText={setEmail}
-          regex={
-            /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-          }
+          regex={REGEX.email}
+          error={STRINGS.emailErrorMsg}
+          hasError={handleHasError}
         />
         <View style={styles.genderRow}>
           <View style={styles.radioRow}>
@@ -161,8 +183,10 @@ const BasicDetails = (props: Props) => {
           placeholder="Enter your first name here"
           icon={IMAGES.LOCK}
           onChangeText={setPassword}
-          regex={/^[0-9]+$/}
+          regex={REGEX.password}
           forPassword
+          error={STRINGS.passwordErrorMsg}
+          hasError={handleHasError}
         />
 
         <InputWithLable
@@ -171,14 +195,27 @@ const BasicDetails = (props: Props) => {
           placeholder="Enter your first name here"
           icon={IMAGES.LOCK}
           onChangeText={setConfirmPassword}
-          regex={/^[0-9]+$/}
+          regex={REGEX.password}
           forPassword
+          error={STRINGS.passwordErrorMsg}
+          hasError={handleHasError}
         />
         <Button
           title="Next"
           onPress={onPressNext}
           loading={loadingData}
           btnStyle={styles.btnContainer}
+          disabled={
+            hasError() ||
+            !(
+              fName &&
+              lName &&
+              phoneNumber &&
+              email &&
+              password &&
+              confirmPassword
+            )
+          }
         />
       </ScrollView>
     </SafeAreaView>

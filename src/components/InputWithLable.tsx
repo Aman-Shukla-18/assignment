@@ -27,18 +27,14 @@ interface Props {
   icon? : ImageSourcePropType
   onChangeText: (val: string) => void
   regex: RegExp ,
-  mainContainerStyle?: ViewStyle
+  mainContainerStyle?: ViewStyle,
+  hasError?: (val: object) => void
 }
 
 const InputWithLable = forwardRef((props: Props, ref) => {
-  const {labelStyle = {}, editable = true, placeholder = '',mainContainerStyle = {}} = props;
+  const {labelStyle = {}, editable = true, placeholder = '',mainContainerStyle = {},hasError = () => {}} = props;
   const [isPassVisible, setIsPassVisible] = useState(false);
-  const [error, setError] = useState(props.error || '');
-  useEffect(() => {
-    if (props?.error) {
-      setError(props?.error);
-    }
-  }, [props?.error]);
+  const [error, setError] = useState('');
 
   const onTogglePrivacy = () => {
     setIsPassVisible(p => !p);
@@ -56,11 +52,17 @@ const InputWithLable = forwardRef((props: Props, ref) => {
           secureTextEntry={props?.forPassword && !isPassVisible}
           onChangeText={(t) => {
             if(props?.regex){
-              if(t == ''){
-                props?.onChangeText(t) 
-              }
-              else {
-                props.regex.test(t) && props?.onChangeText(t) 
+              props?.onChangeText(t) 
+              if(props.regex.test(t)){
+                let tempObj = {}
+                tempObj[props?.label] = false
+                setError('')
+                hasError(tempObj)
+              } else {
+                let tempObj = {}
+                tempObj[props?.label] = true
+                setError(props.error)
+                hasError(tempObj)
               }
             }
             else {
@@ -123,7 +125,7 @@ const styles = StyleSheet.create({
   },
   errorMsgTxt: {
     fontSize: normalize(10),
-    color: colors.BLACK,
+    color: colors.RED,
     marginLeft: vw(10),
     marginTop: vh(5),
   },
