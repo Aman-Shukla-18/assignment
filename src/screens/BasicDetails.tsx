@@ -60,6 +60,9 @@ const BasicDetails = (props: Props) => {
       setTimeout(() => {
         props.navigation.navigate(screenNames.PROFESSIONAL_INFO);
         setLoadingData(false);
+        console.log({
+          fName,lName,phoneNumber, email, gender, password, profilePhoto
+        })
       }, 500);
     } else {
       Alert.alert(STRINGS.confirmPasswordErrorMsg);
@@ -196,7 +199,7 @@ const BasicDetails = (props: Props) => {
           icon={IMAGES.LOCK}
           onChangeText={setConfirmPassword}
           regex={REGEX.password}
-          forPassword
+          // forPassword
           error={STRINGS.passwordErrorMsg}
           hasError={handleHasError}
         />
@@ -210,8 +213,6 @@ const BasicDetails = (props: Props) => {
             !(
               fName &&
               lName &&
-              phoneNumber &&
-              email &&
               password &&
               confirmPassword
             )

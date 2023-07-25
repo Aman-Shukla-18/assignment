@@ -1,38 +1,54 @@
-import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
+// Library imports
 import React, {useState} from 'react';
-import colors from '../utils/colors';
-import {normalize, vh, vw} from '../utils/Dimension';
-import Button from '../components/Button';
-import screenNames from '../utils/screenNames';
-import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {MainStackParams} from '../utils/types';
-import InputWithLable from '../components/InputWithLable';
-import {IMAGES} from '../utils/images';
-import RadioButton from '../components/RadioButton';
-import Divider from '../components/Divider';
 import {Dropdown} from 'react-native-element-dropdown';
-import {educationOptions} from '../utils/constants';
+import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
+import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
+
+// Component imports
+import Button from '../components/Button';
+import Divider from '../components/Divider';
+import InputWithLable from '../components/InputWithLable';
+
+// Util imports
+import colors from '../utils/colors';
+import screenNames from '../utils/screenNames';
+import {MainStackParams} from '../utils/types';
+import {normalize, vh, vw} from '../utils/Dimension';
+import {REGEX, STRINGS, educationOptions} from '../utils/constants';
 
 type Props = {
   navigation: NativeStackNavigationProp<MainStackParams>;
 };
 
 const ProfessionalInfo = (props: Props) => {
+  const [errors, setErrors] = useState({});
   const [loadingData, setLoadingData] = useState<boolean>(false);
   const [yearOfPassing, setYearOfPassing] = useState<string>('');
   const [education, setEducation] = useState<string>('');
   const [grade, setGrade] = useState<string>('');
+  const [experience, setExperience] = useState<string>('');
+  const [designation, setDesignation] = useState<string>('');
+  const [domain, setDomain] = useState<string>('');
 
   const onPressNext = () => {
     setLoadingData(true);
     setTimeout(() => {
       props.navigation.navigate(screenNames.ADDRESS);
       setLoadingData(false);
+      console.log({
+        education, yearOfPassing, grade, experience, designation, domain
+      })
     }, 500);
   };
 
+  const hasError = () => Object.values(errors).includes(true);
+
   const onPressPrevious = () => {
     props.navigation.goBack();
+  };
+
+  const handleHasError = (val: object) => {
+    setErrors({...errors, ...val});
   };
 
   return (
@@ -47,13 +63,14 @@ const ProfessionalInfo = (props: Props) => {
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={styles.iconStyle}
             data={educationOptions}
-            maxHeight={300}
+            maxHeight={vh(250)}
             labelField="label"
             valueField="value"
             placeholder={'Select your qualification'}
             onChange={item => {
               setEducation(item.value);
             }}
+            value={education}
           />
         </View>
         <InputWithLable
@@ -61,37 +78,43 @@ const ProfessionalInfo = (props: Props) => {
           value={yearOfPassing}
           placeholder="Enter year of passing"
           onChangeText={setYearOfPassing}
-          regex={/^[0-9]+$/}
+          regex={REGEX.onlyNumber}
+          error={STRINGS.yearOfPassing}
+          hasError={handleHasError}
         />
         <InputWithLable
-          label="Grade*"
-          value={yearOfPassing}
+          label="Grade"
+          value={grade}
           placeholder="Enter your grade or percentage"
-          onChangeText={setYearOfPassing}
-          regex={/^[0-9]+$/}
+          onChangeText={setGrade}
+          regex={REGEX.characterAndNumber}
+          error={STRINGS.grade}
         />
         <Divider />
         <Text style={styles.sectionHeading}>Professional Info</Text>
         <InputWithLable
-          label="Experience*"
-          value={yearOfPassing}
+          label="Experience"
+          value={experience}
           placeholder="Enter the year of Experience"
-          onChangeText={setYearOfPassing}
-          regex={/^[0-9]+$/}
+          onChangeText={setExperience}
+          regex={REGEX.onlyNumber}
+          error={STRINGS.experience}
         />
         <InputWithLable
-          label="Designation*"
-          value={yearOfPassing}
+          label="Designation"
+          value={designation}
           placeholder="Enter Designation"
-          onChangeText={setYearOfPassing}
-          regex={/^[0-9]+$/}
+          onChangeText={setDesignation}
+          regex={REGEX.characterAndNumber}
+          error={STRINGS.designation}
         />
         <InputWithLable
-          label="Domain*"
-          value={yearOfPassing}
+          label="Domain"
+          value={domain}
           placeholder="Enter your Domain"
-          onChangeText={setYearOfPassing}
-          regex={/^[0-9]+$/}
+          onChangeText={setDomain}
+          regex={REGEX.characterAndNumber}
+          error={STRINGS.domain}
         />
         <View style={[styles.radioRow, styles.btnParentContainer]}>
           <Button
@@ -105,6 +128,13 @@ const ProfessionalInfo = (props: Props) => {
             onPress={onPressNext}
             loading={loadingData}
             btnStyle={styles.btnContainer}
+            disabled={
+              hasError() ||
+              !(
+                education &&
+                yearOfPassing
+              )
+            }
           />
         </View>
       </ScrollView>
