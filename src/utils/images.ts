@@ -9,5 +9,6 @@ export const IMAGES = {
   BUILDING:require('../assets/images/building.png'),
   PEN:require('../assets/images/pen.png'),
   PROFILE:require('../assets/images/profile.png'),
+  ARROW_DOWN:require('../assets/images/arrowDown.png'),
 
 };

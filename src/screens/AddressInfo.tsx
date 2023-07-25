@@ -5,6 +5,7 @@ import {
   ScrollView,
   StyleSheet,
   SafeAreaView,
+  Image,
 } from 'react-native';
 import React, {useState} from 'react';
 import {Dropdown} from 'react-native-element-dropdown';
@@ -87,8 +88,6 @@ const AddressInfo = (props: Props) => {
           <Dropdown
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
-            inputSearchStyle={styles.inputSearchStyle}
-            iconStyle={styles.iconStyle}
             data={stateOptions}
             maxHeight={vh(240)}
             labelField="label"
@@ -97,6 +96,9 @@ const AddressInfo = (props: Props) => {
             onChange={item => {
               setSelectedState(item.value);
             }}
+            renderRightIcon={() => (
+              <Image source={IMAGES.ARROW_DOWN} style={styles.dropIcon} />
+            )}
           />
         </View>
         <InputWithLable
@@ -184,43 +186,18 @@ const styles = StyleSheet.create({
   inputContainer: {
     marginBottom: vh(10),
   },
-
-  container: {
-    backgroundColor: 'white',
-    padding: 16,
-  },
-  dropdown: {
-    height: 50,
-    borderColor: 'gray',
-    borderWidth: 0.5,
-    borderRadius: 8,
-    paddingHorizontal: 8,
-  },
-  icon: {
-    marginRight: 5,
-  },
-  label: {
-    position: 'absolute',
-    backgroundColor: 'white',
-    left: 22,
-    top: 8,
-    zIndex: 999,
-    paddingHorizontal: 8,
-    fontSize: 14,
+  dropIcon: {
+    height: vw(20),
+    width: vw(20),
+    resizeMode: 'contain'
   },
   placeholderStyle: {
-    fontSize: 16,
+    fontSize: normalize(16),
     color: colors.GREY,
+    marginLeft: vw(10)
   },
   selectedTextStyle: {
-    fontSize: 16,
-  },
-  iconStyle: {
-    width: 20,
-    height: 20,
-  },
-  inputSearchStyle: {
-    height: 40,
-    fontSize: 16,
+    fontSize: normalize(16),
+    marginLeft: vw(10)
   },
 });

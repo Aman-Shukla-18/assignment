@@ -1,7 +1,14 @@
 // Library imports
 import React, {useState} from 'react';
 import {Dropdown} from 'react-native-element-dropdown';
-import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  Image,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 // Component imports
@@ -15,6 +22,7 @@ import screenNames from '../utils/screenNames';
 import {MainStackParams} from '../utils/types';
 import {normalize, vh, vw} from '../utils/Dimension';
 import {REGEX, STRINGS, educationOptions} from '../utils/constants';
+import {IMAGES} from '../utils/images';
 
 type Props = {
   navigation: NativeStackNavigationProp<MainStackParams>;
@@ -36,8 +44,13 @@ const ProfessionalInfo = (props: Props) => {
       props.navigation.navigate(screenNames.ADDRESS);
       setLoadingData(false);
       console.log({
-        education, yearOfPassing, grade, experience, designation, domain
-      })
+        education,
+        yearOfPassing,
+        grade,
+        experience,
+        designation,
+        domain,
+      });
     }, 500);
   };
 
@@ -60,8 +73,6 @@ const ProfessionalInfo = (props: Props) => {
           <Dropdown
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
-            inputSearchStyle={styles.inputSearchStyle}
-            iconStyle={styles.iconStyle}
             data={educationOptions}
             maxHeight={vh(250)}
             labelField="label"
@@ -71,6 +82,9 @@ const ProfessionalInfo = (props: Props) => {
               setEducation(item.value);
             }}
             value={education}
+            renderRightIcon={() => (
+              <Image source={IMAGES.ARROW_DOWN} style={styles.dropIcon} />
+            )}
           />
         </View>
         <InputWithLable
@@ -128,13 +142,7 @@ const ProfessionalInfo = (props: Props) => {
             onPress={onPressNext}
             loading={loadingData}
             btnStyle={styles.btnContainer}
-            disabled={
-              hasError() ||
-              !(
-                education &&
-                yearOfPassing
-              )
-            }
+            disabled={hasError() || !(education && yearOfPassing)}
           />
         </View>
       </ScrollView>
@@ -196,43 +204,18 @@ const styles = StyleSheet.create({
   btnParentContainer: {
     marginBottom: vh(20),
   },
-
-  container: {
-    backgroundColor: 'white',
-    padding: 16,
-  },
-  dropdown: {
-    height: 50,
-    borderColor: 'gray',
-    borderWidth: 0.5,
-    borderRadius: 8,
-    paddingHorizontal: 8,
-  },
-  icon: {
-    marginRight: 5,
-  },
-  label: {
-    position: 'absolute',
-    backgroundColor: 'white',
-    left: 22,
-    top: 8,
-    zIndex: 999,
-    paddingHorizontal: 8,
-    fontSize: 14,
+  dropIcon: {
+    height: vw(20),
+    width: vw(20),
+    resizeMode: 'contain'
   },
   placeholderStyle: {
-    fontSize: 16,
+    fontSize: normalize(16),
     color: colors.GREY,
+    marginLeft: vw(10)
   },
   selectedTextStyle: {
-    fontSize: 16,
-  },
-  iconStyle: {
-    width: 20,
-    height: 20,
-  },
-  inputSearchStyle: {
-    height: 40,
-    fontSize: 16,
+    fontSize: normalize(16),
+    marginLeft: vw(10)
   },
 });

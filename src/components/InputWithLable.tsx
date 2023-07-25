@@ -56,7 +56,7 @@ const InputWithLable = forwardRef((props: Props, ref) => {
       )}
       <View style={styles.textInputContainer}>
         {props?.icon && (
-          <Image source={props.icon} style={styles.passShowHideBtn} />
+          <Image source={props.icon} style={styles.icon} />
         )}
         <TextInput
           style={styles.textInput}
@@ -123,12 +123,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: colors.WHITE,
     borderWidth: vw(1),
-    padding: vh(10),
+    paddingVertical: vh(10),
+    paddingRight: vw(16),
     alignItems: 'center',
   },
-  passShowHideBtn: {
+  icon: {
     height: vh(20),
     width: vh(20),
+    tintColor: colors.BLUE,
+    resizeMode: 'contain',
+    marginLeft: vw(16)
+  },
+  passShowHideBtn: {
+    height: vh(26),
+    width: vh(26),
     tintColor: colors.BLUE,
     resizeMode: 'contain',
   },
