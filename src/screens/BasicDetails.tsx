@@ -77,12 +77,7 @@ const BasicDetails = (props: Props) => {
       compressImageQuality: 0.4,
     };
     const cb = image => {
-      const url =
-        Platform.OS === 'android'
-          ? image?.path?.replace('file://', '')
-          : `${image?.path}`;
-      console.log(image, url);
-      setProfilePhoto({uri: url});
+      setProfilePhoto({uri: image?.path});
     };
     Alert.alert('Upload your profile picture from?', '', [
       {
