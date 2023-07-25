@@ -4,12 +4,12 @@ import {Dropdown} from 'react-native-element-dropdown';
 import {
   Image,
   SafeAreaView,
-  ScrollView,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 // Component imports
 import Button from '../components/Button';
@@ -18,11 +18,11 @@ import InputWithLable from '../components/InputWithLable';
 
 // Util imports
 import colors from '../utils/colors';
+import {IMAGES} from '../utils/images';
 import screenNames from '../utils/screenNames';
 import {MainStackParams} from '../utils/types';
 import {normalize, vh, vw} from '../utils/Dimension';
 import {REGEX, STRINGS, educationOptions} from '../utils/constants';
-import {IMAGES} from '../utils/images';
 
 type Props = {
   navigation: NativeStackNavigationProp<MainStackParams>;
@@ -66,7 +66,7 @@ const ProfessionalInfo = (props: Props) => {
 
   return (
     <SafeAreaView style={styles.mainContainer}>
-      <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
+      <KeyboardAwareScrollView bounces={false} showsVerticalScrollIndicator={false}>
         <Text style={styles.sectionHeading}>Educational Info</Text>
         <Text style={styles.InputBoxHeadings}>Education*</Text>
         <View style={styles.ddContainer}>
@@ -103,6 +103,7 @@ const ProfessionalInfo = (props: Props) => {
           onChangeText={setGrade}
           regex={REGEX.characterAndNumber}
           error={STRINGS.grade}
+          hasError={handleHasError}
         />
         <Divider />
         <Text style={styles.sectionHeading}>Professional Info</Text>
@@ -113,6 +114,7 @@ const ProfessionalInfo = (props: Props) => {
           onChangeText={setExperience}
           regex={REGEX.onlyNumber}
           error={STRINGS.experience}
+          hasError={handleHasError}
         />
         <InputWithLable
           label="Designation"
@@ -121,6 +123,7 @@ const ProfessionalInfo = (props: Props) => {
           onChangeText={setDesignation}
           regex={REGEX.characterAndNumber}
           error={STRINGS.designation}
+          hasError={handleHasError}
         />
         <InputWithLable
           label="Domain"
@@ -129,6 +132,7 @@ const ProfessionalInfo = (props: Props) => {
           onChangeText={setDomain}
           regex={REGEX.characterAndNumber}
           error={STRINGS.domain}
+          hasError={handleHasError}
         />
         <View style={[styles.radioRow, styles.btnParentContainer]}>
           <Button
@@ -145,7 +149,7 @@ const ProfessionalInfo = (props: Props) => {
             disabled={hasError() || !(education && yearOfPassing)}
           />
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 };

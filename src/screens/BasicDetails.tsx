@@ -4,9 +4,7 @@ import {
   View,
   Alert,
   Image,
-  Platform,
   Pressable,
-  ScrollView,
   StyleSheet,
   SafeAreaView,
   ImageSourcePropType,
@@ -14,6 +12,7 @@ import {
 import React, {useState} from 'react';
 import ImagePicker from 'react-native-image-crop-picker';
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 //Component imports
 import Button from '../components/Button';
@@ -101,7 +100,7 @@ const BasicDetails = (props: Props) => {
   };
   return (
     <SafeAreaView style={styles.mainContainer}>
-      <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
+      <KeyboardAwareScrollView bounces={false} showsVerticalScrollIndicator={false}>
         <Pressable
           style={styles.profileContainer}
           onPress={onEditProfilePicPress}>
@@ -142,6 +141,7 @@ const BasicDetails = (props: Props) => {
           onChangeText={setPhoneNumber}
           regex={REGEX.TenDigitNumber}
           error={STRINGS.phoneNoErrorMsg}
+          hasError={handleHasError}
         />
 
         <InputWithLable
@@ -152,6 +152,7 @@ const BasicDetails = (props: Props) => {
           onChangeText={setEmail}
           regex={REGEX.email}
           error={STRINGS.emailErrorMsg}
+          hasError={handleHasError}
         />
         <View style={styles.genderRow}>
           <View style={styles.radioRow}>
@@ -211,7 +212,7 @@ const BasicDetails = (props: Props) => {
             )
           }
         />
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 };

@@ -2,7 +2,7 @@
 import {
   View,
   Alert,
-  ScrollView,
+
   StyleSheet,
   SafeAreaView,
   Image,
@@ -10,6 +10,7 @@ import {
 import React, {useState} from 'react';
 import {Dropdown} from 'react-native-element-dropdown';
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 //Component imports
 import Button from '../components/Button';
@@ -54,7 +55,7 @@ const AddressInfo = (props: Props) => {
 
   return (
     <SafeAreaView style={styles.mainContainer}>
-      <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
+      <KeyboardAwareScrollView bounces={false} showsVerticalScrollIndicator={false}>
         <InputWithLable
           value={address}
           placeholder="Address"
@@ -124,7 +125,7 @@ const AddressInfo = (props: Props) => {
             )
           }
         />
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 };

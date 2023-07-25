@@ -25,7 +25,7 @@ export const REGEX = {
   password: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{3,}$/,
   email: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
   characterAndNumber: /^[a-zA-Z0-9 ]*$/,
-  moreThanThreeChar: /[A-Za-z]{3,}$/
+  moreThanThreeChar: /^[A-Za-z]{3,}$/
 };
 export const educationOptions = [
   {label: 'Post Graduate', value: 'Post Graduate'},
