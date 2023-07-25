@@ -11,15 +11,21 @@ export const STRINGS = {
   experience: 'Experience can only have numbers',
   designation: 'Designation can have only number and characters',
   domain: 'Domain can have only number and characters',
+  address: 'Address needs to have more than 3 characters',
+  landmark: 'Landmark needs to have more than 3 characters',
+  city: 'City can have only characters',
+  pinCode: 'Pin code can only have 6 digit numbers',
 };
 export const REGEX = {
   name: /[A-Za-z]{3,}$/,
   onlyCharacter: /[A-Za-z]*$/,
   onlyNumber: /^[0-9]+$/,
-  TenDigitNumber: /^[0-9]{10}$/,
+  TenDigitNumber: /^[0-9]{10}$/, 
+  pinCode: /^[0-9]{6}$/,
   password: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{3,}$/,
   email: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-  characterAndNumber: /^[a-zA-Z0-9 ]*$/
+  characterAndNumber: /^[a-zA-Z0-9 ]*$/,
+  moreThanThreeChar: /[A-Za-z]{3,}$/
 };
 export const educationOptions = [
   {label: 'Post Graduate', value: 'Post Graduate'},

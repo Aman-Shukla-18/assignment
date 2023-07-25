@@ -1,48 +1,56 @@
+//Library imports
 import {
+  View,
   Alert,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
-  Text,
-  View,
+  SafeAreaView,
 } from 'react-native';
 import React, {useState} from 'react';
-import colors from '../utils/colors';
-import {normalize, vh, vw} from '../utils/Dimension';
-import Button from '../components/Button';
-import screenNames from '../utils/screenNames';
-import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {MainStackParams} from '../utils/types';
-import InputWithLable from '../components/InputWithLable';
-import {IMAGES} from '../utils/images';
-import RadioButton from '../components/RadioButton';
-import Divider from '../components/Divider';
 import {Dropdown} from 'react-native-element-dropdown';
-import {educationOptions, stateOptions} from '../utils/constants';
+import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
+
+//Component imports
+import Button from '../components/Button';
+import InputWithLable from '../components/InputWithLable';
+
+//Util imports
+import colors from '../utils/colors';
+import {IMAGES} from '../utils/images';
+import {MainStackParams} from '../utils/types';
+import {normalize, vh, vw} from '../utils/Dimension';
+import {REGEX, STRINGS, stateOptions} from '../utils/constants';
 
 type Props = {
   navigation: NativeStackNavigationProp<MainStackParams>;
 };
 
 const AddressInfo = (props: Props) => {
-  const [loadingData, setLoadingData] = useState<boolean>(false);
-  const [address, setAddress] = useState<string>('');
-  const [landmark, setLandmark] = useState<string>('');
+  const [errors, setErrors] = useState({});
   const [city, setCity] = useState<string>('');
   const [pinCode, setPinCode] = useState<string>('');
+  const [address, setAddress] = useState<string>('');
+  const [landmark, setLandmark] = useState<string>('');
   const [selectedState, setSelectedState] = useState<string>('');
+  const [loadingData, setLoadingData] = useState<boolean>(false);
 
   const onPressSubmit = () => {
     setLoadingData(true);
     setTimeout(() => {
       Alert.alert('Your Data saved successfully.');
+      console.log({
+       address, landmark, city, selectedState, pinCode
+      })
       setLoadingData(false);
     }, 500);
   };
 
-  const onPressPrevious = () => {
-    props.navigation.goBack();
+  const hasError = () => Object.values(errors).includes(true);
+
+  const handleHasError = (val: object) => {
+    setErrors({...errors, ...val});
   };
+
   return (
     <SafeAreaView style={styles.mainContainer}>
       <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
@@ -50,25 +58,30 @@ const AddressInfo = (props: Props) => {
           value={address}
           placeholder="Address"
           onChangeText={setAddress}
-          regex={/^[0-9]+$/}
           icon={IMAGES.BUILDING}
           mainContainerStyle={styles.inputContainer}
+          regex={REGEX.moreThanThreeChar}
+          error={STRINGS.address}
+          hasError={handleHasError}
         />
         <InputWithLable
           value={landmark}
           placeholder="Landmark"
           onChangeText={setLandmark}
-          regex={/^[0-9]+$/}
           icon={IMAGES.BUILDING}
           mainContainerStyle={styles.inputContainer}
+          regex={REGEX.moreThanThreeChar}
+          error={STRINGS.landmark}
+          hasError={handleHasError}
         />
         <InputWithLable
           value={city}
           placeholder="City"
           onChangeText={setCity}
-          regex={/^[0-9]+$/}
           icon={IMAGES.BUILDING}
           mainContainerStyle={styles.inputContainer}
+          regex={REGEX.onlyCharacter}
+          error={STRINGS.city}
         />
         <View style={styles.ddContainer}>
           <Dropdown
@@ -90,8 +103,9 @@ const AddressInfo = (props: Props) => {
           value={pinCode}
           placeholder="Pin Code"
           onChangeText={setPinCode}
-          regex={/^[0-9]+$/}
           icon={IMAGES.BUILDING}
+          regex={REGEX.pinCode}
+          error={STRINGS.pinCode}
         />
 
         <Button
@@ -99,6 +113,14 @@ const AddressInfo = (props: Props) => {
           onPress={onPressSubmit}
           loading={loadingData}
           btnStyle={styles.btnContainer}
+          disabled = {
+            hasError() ||
+            !(
+              address &&
+              landmark &&
+              selectedState
+            )
+          }
         />
       </ScrollView>
     </SafeAreaView>
