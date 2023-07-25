@@ -24,6 +24,7 @@ const Router = () => {
       <Stack.Navigator>
       <Stack.Screen name={screenNames.BASIC} component={BasicDetails}
       options={{
+        headerTitleAlign: 'center',
         headerShadowVisible: false,
         headerStyle: styles.headerStyle,
         headerTitle: () => <Text style = {styles.heading}>Register</Text>,
@@ -34,6 +35,7 @@ const Router = () => {
         {
           headerLeft: () =>  <BackButton navigation = {navigation} />,
           headerShadowVisible: false,
+          headerTitleAlign: 'center',
           headerStyle: styles.headerStyle,
           headerTitle: () => <Text style = {styles.heading}>Your Info</Text>,
         }
@@ -42,6 +44,7 @@ const Router = () => {
       options={({navigation}) => (
         {
           headerLeft: () =>  <BackButton navigation = {navigation} />,
+          headerTitleAlign: 'center',
           headerShadowVisible: false,
           headerStyle: styles.headerStyle,
           headerTitle: () => <Text style = {styles.heading}>Your Address</Text>,
@@ -65,8 +68,10 @@ const styles = StyleSheet.create({
     color: colors.BLACK,
     fontWeight: 'bold',
     letterSpacing: vw(1)
+    
   },
   headerStyle: {
-    backgroundColor: colors.WHITE,
+    backgroundColor: colors.GREY,
+
   },
 })
