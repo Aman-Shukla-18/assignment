@@ -1,4 +1,9 @@
 # Getting Started
+This project is a assignment from neoSoft, In this app we have created all the custom generic components for text input and button. and we have also implemented image picker for android and iOS.
+
+For the form validation we could have used formic and yup but I have implemented the validation with regex in a optimized way.
+
+# Installation
 ## Step 1: Start the Metro Server
 
 First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
@@ -36,7 +41,3 @@ npm run ios
 # OR using Yarn
 yarn ios
 ```
-# Overview of the project
-This project is a assignment from neoSoft, In this app we have created all the custom generic components for text input and button. and we have also implemented image picker for android and iOS.
-
-For the form validation we could have used formic and yup but I have implemented the validation with regex in a optimized way.
