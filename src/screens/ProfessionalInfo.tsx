@@ -1,15 +1,9 @@
 // Library imports
 import React, {useState} from 'react';
 import {Dropdown} from 'react-native-element-dropdown';
-import {
-  Image,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {Image, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 // Component imports
 import Button from '../components/Button';
@@ -66,7 +60,10 @@ const ProfessionalInfo = (props: Props) => {
 
   return (
     <SafeAreaView style={styles.mainContainer}>
-      <KeyboardAwareScrollView bounces={false} showsVerticalScrollIndicator={false}>
+      <KeyboardAwareScrollView
+        bounces={false}
+        showsVerticalScrollIndicator={false}
+        style={styles.innerContainer}>
         <Text style={styles.sectionHeading}>Educational Info</Text>
         <Text style={styles.InputBoxHeadings}>Education*</Text>
         <View style={styles.ddContainer}>
@@ -160,8 +157,10 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     backgroundColor: colors.WHITE,
-    paddingTop: vh(30),
+  },
+  innerContainer: {
     paddingHorizontal: vw(26),
+    paddingBottom: vh(10),
   },
   sectionHeading: {
     fontSize: normalize(18),
@@ -211,15 +210,15 @@ const styles = StyleSheet.create({
   dropIcon: {
     height: vw(20),
     width: vw(20),
-    resizeMode: 'contain'
+    resizeMode: 'contain',
   },
   placeholderStyle: {
     fontSize: normalize(16),
     color: colors.GREY,
-    marginLeft: vw(10)
+    marginLeft: vw(10),
   },
   selectedTextStyle: {
     fontSize: normalize(16),
-    marginLeft: vw(10)
+    marginLeft: vw(10),
   },
 });

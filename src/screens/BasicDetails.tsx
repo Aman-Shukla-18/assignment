@@ -12,7 +12,7 @@ import {
 import React, {useState} from 'react';
 import ImagePicker from 'react-native-image-crop-picker';
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 //Component imports
 import Button from '../components/Button';
@@ -46,7 +46,6 @@ const BasicDetails = (props: Props) => {
     IMAGES.PROFILE,
   );
 
-
   const hasError = () => Object.values(errors).includes(true);
 
   const handleHasError = (val: object) => {
@@ -60,8 +59,14 @@ const BasicDetails = (props: Props) => {
         props.navigation.navigate(screenNames.PROFESSIONAL_INFO);
         setLoadingData(false);
         console.log({
-          fName,lName,phoneNumber, email, gender, password, profilePhoto
-        })
+          fName,
+          lName,
+          phoneNumber,
+          email,
+          gender,
+          password,
+          profilePhoto,
+        });
       }, 500);
     } else {
       Alert.alert(STRINGS.confirmPasswordErrorMsg);
@@ -100,7 +105,10 @@ const BasicDetails = (props: Props) => {
   };
   return (
     <SafeAreaView style={styles.mainContainer}>
-      <KeyboardAwareScrollView bounces={false} showsVerticalScrollIndicator={false}>
+      <KeyboardAwareScrollView
+        bounces={false}
+        showsVerticalScrollIndicator={false}
+        style={styles.innerContainer}>
         <Pressable
           style={styles.profileContainer}
           onPress={onEditProfilePicPress}>
@@ -203,13 +211,7 @@ const BasicDetails = (props: Props) => {
           loading={loadingData}
           btnStyle={styles.btnContainer}
           disabled={
-            hasError() ||
-            !(
-              fName &&
-              lName &&
-              password &&
-              confirmPassword
-            )
+            hasError() || !(fName && lName && password && confirmPassword)
           }
         />
       </KeyboardAwareScrollView>
@@ -223,8 +225,10 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     backgroundColor: colors.WHITE,
-    paddingTop: vh(30),
+  },
+  innerContainer: {
     paddingHorizontal: vw(26),
+    paddingBottom: vh(10),
   },
   heading: {
     fontSize: normalize(22),

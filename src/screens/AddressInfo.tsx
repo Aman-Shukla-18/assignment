@@ -1,16 +1,9 @@
 //Library imports
-import {
-  View,
-  Alert,
-
-  StyleSheet,
-  SafeAreaView,
-  Image,
-} from 'react-native';
+import {View, Alert, StyleSheet, SafeAreaView, Image} from 'react-native';
 import React, {useState} from 'react';
 import {Dropdown} from 'react-native-element-dropdown';
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 //Component imports
 import Button from '../components/Button';
@@ -41,8 +34,12 @@ const AddressInfo = (props: Props) => {
     setTimeout(() => {
       Alert.alert('Your Data saved successfully.');
       console.log({
-       address, landmark, city, selectedState, pinCode
-      })
+        address,
+        landmark,
+        city,
+        selectedState,
+        pinCode,
+      });
       setLoadingData(false);
     }, 500);
   };
@@ -55,7 +52,10 @@ const AddressInfo = (props: Props) => {
 
   return (
     <SafeAreaView style={styles.mainContainer}>
-      <KeyboardAwareScrollView bounces={false} showsVerticalScrollIndicator={false}>
+      <KeyboardAwareScrollView
+        bounces={false}
+        showsVerticalScrollIndicator={false}
+        style={styles.innerContainer}>
         <InputWithLable
           value={address}
           placeholder="Address"
@@ -116,14 +116,7 @@ const AddressInfo = (props: Props) => {
           onPress={onPressSubmit}
           loading={loadingData}
           btnStyle={styles.btnContainer}
-          disabled = {
-            hasError() ||
-            !(
-              address &&
-              landmark &&
-              selectedState
-            )
-          }
+          disabled={hasError() || !(address && landmark && selectedState)}
         />
       </KeyboardAwareScrollView>
     </SafeAreaView>
@@ -136,8 +129,10 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     backgroundColor: colors.WHITE,
-    paddingTop: vh(30),
+  },
+  innerContainer: {
     paddingHorizontal: vw(26),
+    paddingBottom: vh(10),
   },
   sectionHeading: {
     fontSize: normalize(18),
@@ -190,15 +185,15 @@ const styles = StyleSheet.create({
   dropIcon: {
     height: vw(20),
     width: vw(20),
-    resizeMode: 'contain'
+    resizeMode: 'contain',
   },
   placeholderStyle: {
     fontSize: normalize(16),
     color: colors.GREY,
-    marginLeft: vw(10)
+    marginLeft: vw(10),
   },
   selectedTextStyle: {
     fontSize: normalize(16),
-    marginLeft: vw(10)
+    marginLeft: vw(10),
   },
 });
