@@ -10,7 +10,7 @@ import {
   ViewStyle,
   ImageSourcePropType,
 } from 'react-native';
-import React, {forwardRef, useState} from 'react';
+import React, {useState} from 'react';
 //Util imports
 import colors from '../utils/colors';
 import {IMAGES} from '../utils/images';
@@ -33,7 +33,7 @@ interface Props {
   hasError?: (val: object) => void;
 }
 
-const InputWithLable = forwardRef((props: Props, ref) => {
+const InputWithLable = (props: Props) => {
   const {
     labelStyle = {},
     editable = true,
@@ -98,7 +98,7 @@ const InputWithLable = forwardRef((props: Props, ref) => {
       {error !== '' && <Text style={styles.errorMsgTxt}>{error}</Text>}
     </View>
   );
-});
+}
 
 export default InputWithLable;
 
