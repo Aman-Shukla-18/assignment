@@ -57,6 +57,7 @@ const AddressInfo = (props: Props) => {
         showsVerticalScrollIndicator={false}
         style={styles.innerContainer}>
         <InputWithLable
+          id="A01"
           value={address}
           placeholder="Address"
           onChangeText={setAddress}
@@ -67,6 +68,7 @@ const AddressInfo = (props: Props) => {
           hasError={handleHasError}
         />
         <InputWithLable
+          id="A02"
           value={landmark}
           placeholder="Landmark"
           onChangeText={setLandmark}
@@ -77,6 +79,7 @@ const AddressInfo = (props: Props) => {
           hasError={handleHasError}
         />
         <InputWithLable
+          id="A03"
           value={city}
           placeholder="City"
           onChangeText={setCity}
@@ -103,6 +106,7 @@ const AddressInfo = (props: Props) => {
           />
         </View>
         <InputWithLable
+          id="A04"
           value={pinCode}
           placeholder="Pin Code"
           onChangeText={setPinCode}

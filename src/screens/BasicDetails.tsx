@@ -122,6 +122,7 @@ const BasicDetails = (props: Props) => {
           </View>
         </Pressable>
         <InputWithLable
+          id="B01"
           label="First Name*"
           value={fName}
           placeholder="Enter your first name here"
@@ -132,6 +133,7 @@ const BasicDetails = (props: Props) => {
           hasError={handleHasError}
         />
         <InputWithLable
+          id="B02"
           label="Last Name*"
           value={lName}
           placeholder="Enter your last name here"
@@ -142,6 +144,7 @@ const BasicDetails = (props: Props) => {
           hasError={handleHasError}
         />
         <InputWithLable
+          id="B03"
           label="Phone Number"
           value={phoneNumber}
           placeholder="Enter your 10 digit phone number"
@@ -153,6 +156,7 @@ const BasicDetails = (props: Props) => {
         />
 
         <InputWithLable
+          id="B04"
           label="Email"
           value={email}
           placeholder="Your email goes here"
@@ -183,6 +187,7 @@ const BasicDetails = (props: Props) => {
           </View>
         </View>
         <InputWithLable
+          id="B05"
           label="Password*"
           value={password}
           placeholder="Enter your first name here"
@@ -195,6 +200,7 @@ const BasicDetails = (props: Props) => {
         />
 
         <InputWithLable
+          id="B06"
           label="Confirm Password*"
           value={confirmPassword}
           placeholder="Enter your first name here"

@@ -85,6 +85,7 @@ const ProfessionalInfo = (props: Props) => {
           />
         </View>
         <InputWithLable
+          id="P01"
           label="Year Of Passing*"
           value={yearOfPassing}
           placeholder="Enter year of passing"
@@ -94,6 +95,7 @@ const ProfessionalInfo = (props: Props) => {
           hasError={handleHasError}
         />
         <InputWithLable
+          id="P02"
           label="Grade"
           value={grade}
           placeholder="Enter your grade or percentage"
@@ -105,6 +107,7 @@ const ProfessionalInfo = (props: Props) => {
         <Divider />
         <Text style={styles.sectionHeading}>Professional Info</Text>
         <InputWithLable
+          id="P03"
           label="Experience"
           value={experience}
           placeholder="Enter the year of Experience"
@@ -114,6 +117,7 @@ const ProfessionalInfo = (props: Props) => {
           hasError={handleHasError}
         />
         <InputWithLable
+          id="P04"
           label="Designation"
           value={designation}
           placeholder="Enter Designation"
@@ -123,6 +127,7 @@ const ProfessionalInfo = (props: Props) => {
           hasError={handleHasError}
         />
         <InputWithLable
+          id="P05"
           label="Domain"
           value={domain}
           placeholder="Enter your Domain"

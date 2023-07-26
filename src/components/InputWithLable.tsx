@@ -17,6 +17,7 @@ import {IMAGES} from '../utils/images';
 import {normalize, vh, vw} from '../utils/Dimension';
 
 interface Props {
+  id: string;
   value: string;
   placeholder?: string;
   editable?: boolean;
@@ -68,12 +69,12 @@ const InputWithLable = forwardRef((props: Props, ref) => {
               props?.onChangeText(t);
               if (props.regex.test(t)) {
                 let tempObj = {};
-                tempObj[props?.label] = false;
+                tempObj[props?.id] = false;
                 setError('');
                 hasError(tempObj);
               } else {
                 let tempObj = {};
-                tempObj[props?.label] = true;
+                tempObj[props?.id] = true;
                 setError(props.error);
                 hasError(tempObj);
               }
